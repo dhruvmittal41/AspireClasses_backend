@@ -1,7 +1,7 @@
 // routes/authRoutes.js
 const express = require('express');
 const { check, body } = require('express-validator');
-const { registerUser, loginUser, getUserProfile, getAllUsers, assignTest } = require('../controllers/authController');
+const { registerUser, loginUser, getUserProfile, getAllUsers, assignTest, getBoughtTests } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -31,6 +31,7 @@ router.post(
 // @desc    Get user data
 router.get('/user', protect, getUserProfile);
 router.get('/user/all', protect, getAllUsers);
-router.post('/user/assigntest', protect, assignTest)
+router.post('/user/assigntest', protect, assignTest);
+router.get("/user/mytests", protect, getBoughtTests);
 
 module.exports = router;

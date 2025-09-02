@@ -14,7 +14,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
     email_or_phone VARCHAR(255) UNIQUE NOT NULL,
-    school_name VARCHAR(255),
+    school_name VARCHAR(255),       
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 

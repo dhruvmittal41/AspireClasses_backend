@@ -133,3 +133,44 @@ exports.assignTest = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.getBoughtTests = async (req, res, next) => {
+    try {
+        const userId = req.user?.id; // safer
+
+        if (!userId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        // Get user with assigned test
+        const { rows: userRows } = await db.query(
+            `SELECT assigned_testid, is_paid FROM users WHERE id = $1`,
+            [userId]
+        );
+
+        if (userRows.length === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const user = userRows[0];
+
+        if (!user.is_paid || !user.assigned_testid) {
+            return res.json([]); // User has no paid tests
+        }
+
+        // Fetch test details
+        const { rows: testRows } = await db.query(
+            `SELECT id, test_name, subject_topic, num_questions FROM tests WHERE id = $1`,
+            [user.assigned_testid]
+        );
+
+        if (testRows.length === 0) {
+            return res.status(404).json({ message: "Test not found" });
+        }
+
+        // return single test
+        res.json(testRows[0]);
+    } catch (err) {
+        next(err);
+    }
+};
