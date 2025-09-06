@@ -21,4 +21,16 @@ const findByUserId = async (userId) => {
     return rows;
 };
 
-module.exports = { create, findByUserId };
+// Insert a new result
+const createResult = async ({ userId, testId, score }) => {
+    const query = `
+    INSERT INTO results (user_id, test_id, score)
+    VALUES ($1, $2, $3)
+    RETURNING *;
+  `;
+    const { rows } = await db.query(query, [userId, testId, score]);
+    return rows[0];
+};
+
+
+module.exports = { create, findByUserId, createResult };

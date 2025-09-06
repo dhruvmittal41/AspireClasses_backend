@@ -34,4 +34,5 @@ router.get('/user/all', protect, getAllUsers);
 router.post('/user/assigntest', protect, assignTest);
 router.get("/user/mytests", protect, getBoughtTests);
 
+
 module.exports = router;

@@ -11,6 +11,7 @@ const protect = (req, res, next) => {
             // Verify token
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+
             // Attach user to the request object (excluding password)
             req.user = decoded.user;
             next();
