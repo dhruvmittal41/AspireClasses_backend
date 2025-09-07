@@ -8,12 +8,13 @@ const resultRoutes = require('./routes/resultRoutes');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const url = process.env.FRONTEND_URL;
 
 const app = express();
 
 // Middleware
 app.use(cors({
-    origin: "http://localhost:5173", // allow frontend dev server
+    origin: url, // allow frontend dev server
     credentials: true, // if you need cookies/auth headers
 }));
 // Enable Cross-Origin Resource Sharing
